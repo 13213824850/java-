@@ -158,6 +158,44 @@ ctrl+z 可退出 
 
 lsof -i:8080：根据端口查看进程pid:
 
+linux服务相关的命令
+	centos系统6和7服务相关命令有所不同
+	
+	centos6服务使用; service 服务名 参数
+	参数：start 启动
+		  stop关闭
+		  restart 关闭后启动
+		  reload 不关闭重新启动
+		  status 状态
+	例：防火墙
+	service firewalld status查询防火墙状态
+	服务自启动；
+	chkconfig --list | grep firewalld 查询防火墙是不是自启动
+	chkconfig --level 3 服务名<firewalld> on/off 将防火墙自启动打开或关闭
+	3代表的是系统运行级别
+	0关机 1root登录没网 2多用户登录没网 3多用户登录，可以远程登录
+	4保留 5和3一样多加了图形化界面 6关机重启
+	
+	#若设置mysql启动 需将mysql服务添加进去
+		1）将服务文件拷贝到init.d下，并重命名为mysql
+        cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysql
+		chmod +x /etc/init.d/mysql赋予权限
+		chkconfig --add mysql 添加服务
+		reboot 重启机器
+
+	
+	centos7的服务相关命令
+	systemctl list -unit-files 查看服务
+	systemctl 参数 服务名
+	参数：start stop restart reload status
+	设置自启动：systemctl enable 服务名
+	不自启动 ； systemctl disable 服务名
+	 
+	创建用于启动MySQL的配置文件
+	# touch /usr/lib/systemd/system/mysqld.service 创建文件
+	# cd /usr/lib/systemd/system 编辑文件
+
+	
 
 
 面试官常问的十个linux问题
